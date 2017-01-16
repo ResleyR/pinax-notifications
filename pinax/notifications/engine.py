@@ -39,6 +39,8 @@ def acquire_lock(*args):
 
 def send_all(*args):
     lock = acquire_lock(*args)
+    if not lock:
+        return
     batches, sent, sent_actual = 0, 0, 0
     start_time = time.time()
 
