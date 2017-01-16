@@ -54,7 +54,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='noticesetting',
             name='notice_type',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='pinax_notifications.NoticeType', verbose_name='notice type'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='notifications.NoticeType', verbose_name='notice type'),
         ),
         migrations.AddField(
             model_name='noticesetting',
