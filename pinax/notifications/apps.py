@@ -5,5 +5,5 @@ from django.utils.translation import ugettext_lazy as _
 class AppConfig(BaseAppConfig):
 
     name = "pinax.notifications"
-    label = "pinax_notifications"
+    label = "notifications"
     verbose_name = _("Pinax Notifications")
