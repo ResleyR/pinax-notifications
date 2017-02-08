@@ -4,7 +4,7 @@ from .models import NoticeType, NoticeQueueBatch, NoticeSetting
 
 
 class NoticeTypeAdmin(admin.ModelAdmin):
-    list_display = ["label", "display", "description", "default"]
+    list_display = ["label", "display", "description", "default", "delay"]
 
 
 class NoticeSettingAdmin(admin.ModelAdmin):

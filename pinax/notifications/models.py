@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from __future__ import print_function
 
 import base64
+from datetime import timedelta
 
 from django.db import models
 from django.db.models.query import QuerySet
@@ -31,6 +32,7 @@ class NoticeType(models.Model):
     label = models.CharField(_("label"), max_length=40)
     display = models.CharField(_("display"), max_length=50)
     description = models.CharField(_("description"), max_length=100)
+    delay = models.DurationField(default=timedelta(days=0), verbose_name="Delay between Notices")
 
     # by default only on for media with sensitivity less than or equal to this number
     default = models.IntegerField(_("default"))
