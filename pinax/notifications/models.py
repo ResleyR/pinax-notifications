@@ -8,7 +8,6 @@ from django.db import models
 from django.db.models.query import QuerySet
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import get_language, activate
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.six.moves import cPickle as pickle  # pylint: disable-msg=F
 
@@ -45,7 +44,7 @@ class NoticeType(models.Model):
         verbose_name_plural = _("notice types")
 
     @classmethod
-    def create(cls, label, display, description, default=2, verbosity=1):
+    def create(cls, label, display, description, default=2, verbosity=1, delay=None):
         """
         Creates a new NoticeType.
 
@@ -62,6 +61,9 @@ class NoticeType(models.Model):
                 updated = True
             if default != notice_type.default:
                 notice_type.default = default
+                updated = True
+            if delay is not None and delay != notice_type.delay:
+                notice_type.delay = delay
                 updated = True
             if updated:
                 notice_type.save()
