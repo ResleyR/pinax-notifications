@@ -70,7 +70,10 @@ class NoticeType(models.Model):
                 if verbosity > 1:
                     print("Updated %s NoticeType" % label)
         except cls.DoesNotExist:
-            cls(label=label, display=display, description=description, default=default).save()
+            obj = cls(label=label, display=display, description=description, default=default)
+            if delay is not None:
+                obj.delay = delay
+            obj.save()
             if verbosity > 1:
                 print("Created %s NoticeType" % label)
 

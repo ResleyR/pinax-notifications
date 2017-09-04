@@ -1,4 +1,5 @@
 import base64
+from datetime import timedelta
 
 from django.core import mail
 from django.utils.six.moves import cPickle as pickle
@@ -34,18 +35,22 @@ class BaseTest(TestCase):
 class TestNoticeType(TestCase):
 
     def test_create(self):
+        five_days = timedelta(days=5)
+        seven_days = timedelta(days=7)
         label = "friends_invite"
-        NoticeType.create(label, "Invitation Received", "you received an invitation", default=2,
+        NoticeType.create(label, "Invitation Received", "you received an invitation", default=2, delay=five_days,
                           verbosity=2)
         n = NoticeType.objects.get(label=label)
         self.assertEqual(str(n), label)
+        self.assertEqual(n.delay, five_days)
         # update
-        NoticeType.create(label, "Invitation for you", "you got an invitation", default=1,
+        NoticeType.create(label, "Invitation for you", "you got an invitation", default=1, delay=seven_days,
                           verbosity=2)
         n = NoticeType.objects.get(pk=n.pk)
         self.assertEqual(n.display, "Invitation for you")
         self.assertEqual(n.description, "you got an invitation")
         self.assertEqual(n.default, 1)
+        self.assertEqual(n.delay, seven_days)
 
 
 class TestNoticeSetting(BaseTest):
