@@ -5,6 +5,7 @@ import base64
 from datetime import timedelta
 
 from django.db import models
+from django.db.models import CASCADE
 from django.db.models.query import QuerySet
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import ugettext_lazy as _
@@ -84,11 +85,11 @@ class NoticeSetting(models.Model):
     of a given type to a given medium.
     """
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("user"))
-    notice_type = models.ForeignKey(NoticeType, verbose_name=_("notice type"))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("user"), on_delete=CASCADE)
+    notice_type = models.ForeignKey(NoticeType, verbose_name=_("notice type"), on_delete=CASCADE)
     medium = models.CharField(_("medium"), max_length=1, choices=NOTICE_MEDIA)
     send = models.BooleanField(_("send"), default=False)
-    scoping_content_type = models.ForeignKey(ContentType, null=True, blank=True)
+    scoping_content_type = models.ForeignKey(ContentType, null=True, blank=True, on_delete=CASCADE)
     scoping_object_id = models.PositiveIntegerField(null=True, blank=True)
     scoping = GenericForeignKey("scoping_content_type", "scoping_object_id")
 
